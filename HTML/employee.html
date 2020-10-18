@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>List of Employees</title>
+	<link rel="stylesheet" type="text/css" href="/CSS/employee.css">
+</head>
+<body>
+	<div class="logo"></div>
+	<div class="form-wrapper">
+		<div id="form"></div>
+		<div class="form-element">
+			<span>Sort on: </span>
+			<select id="sort"></select>
+			<select id="order">
+				<option value="asc">ascending</option>
+				<option value="desc">descending</option>
+			</select>
+		</div>
+		<button onclick="requestServer()">submit</button>
+		<button onclick="clearFilters()">clear</button>
+		<button onclick="addFilterElement()">Add Filter</button>
+	</div>
+	<div id="container"></div>
+	<script type="text/javascript" src="/JS/employee.js"></script>
+</body>
+</html>

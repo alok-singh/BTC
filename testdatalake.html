@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title></title>
+</head>
+
+<body>
+    <div class="article-related">
+        <h2 class="subheader">Artikel Berkaitan Datalake LSI</h2>
+        <div class="whiteBg">
+            <div class="row" id="datalakeRowLSI"></div>
+        </div>
+    </div>
+    <div class="article-related">
+        <h2 class="subheader">Artikel Berkaitan Datalake Base</h2>
+        <div class="whiteBg">
+            <div class="row" id="datalakeRowBase"></div>
+        </div>
+    </div>
+    <br>
+    <script type="text/javascript">
+	    var articleIDJS = '<%=ArticleId%>';
+	    articleIDJS = 10003;
+	    var sendAlready = {};
+	    var articleRelatedPosition = {};
+	    function createNode(element) {
+	        return document.createElement(element);
+	    }
+
+	    function append(parent, el) {
+	        return parent.appendChild(el);
+	    }
+
+	    function onclickAnchor(data, position, productKey) {
+	        dataLayer.push({
+	            "event": "article_click",
+	            "ecommerce": {
+	                "click": {
+	                    'actionField': { "list": "Artikel Berkaitan " + productKey },
+	                    "products": [{
+	                        "name": data.ArticleTitle,
+	                        "id": data.ArticleCMSID,
+	                        "price": "0.00",
+	                        "brand": "NA",
+	                        "category": data.ArticleURL,
+	                        "variant": data.ModelName,
+	                        "position": position
+	                    }]
+	                }
+	            }
+	        });
+	    }
+
+	    window.addEventListener('scroll', function(event){
+	    	if(sendAlready['lsi'] && sendAlready['base']){
+	    		return;
+	    	}
+	    	var scrollTop = event.target.scrollingElement.scrollTop;
+	    	if(!sendAlready['lsi'] && (scrollTop > articleRelatedPosition['lsi'])){
+	    		dataLayer.push({
+	    			"event": "article_impressions",
+	    			"ecommerce": { 
+	    				"impressions": {
+	    					"products" : productList['lsi']
+	    				}
+	    			}
+	    		});
+	    		sendAlready['lsi'] = true;
+	    	}
+	    	if(!sendAlready['base'] && (scrollTop > articleRelatedPosition['base'])){
+	    		dataLayer.push({
+	    			"event": "article_impressions",
+	    			"ecommerce": { 
+	    				"impressions": {
+	    					"products" : productList['base']
+	    				}
+	    			}
+	    		});
+	    		sendAlready['base'] = true;
+	    	}
+	    })
+
+	    const myList = {};
+	    myList['lsi'] = document.getElementById('datalakeRowLSI');
+	    myList['base'] = document.getElementById('datalakeRowBase');
+
+
+	    const urlLSI = `https://api.recomm.pink.cat/lsi/contentsimilarity?product=gempak&contentid=${articleIDJS}&numofsim=6&datelimit=2017-01-01`;
+	    const urlBase = `https://api.recomm.pink.cat/base/contentsimilarity?product=gempak&contentid=${articleIDJS}&numofsim=6&datelimit=2017-01-01`;
+		window.productList = {};
+		sendAlready['lsi'] = true;
+		sendAlready['base'] = true;
+
+	    function renderDatalakeList(url, productKey) {
+		    let fetchData = {
+		        method: 'GET'
+		    }
+		    fetch(url, fetchData).then(function(response) {
+		        if (response.status !== 200) {
+		            console.log('Datalake API Error. Status Code: ' + response.status);
+		            return;
+		        }
+		        response.json().then(function(response) {
+		            var data = response.body;
+		            var count = data.length;
+		            productList[productKey] = [];
+		            for (let i = 0; i<count; i++) {
+		                let listItem = document.createElement('div');
+		                let newUrl = data[i].ArticleURL.replace("www.gempak.com/artikel", "cms-astrogempak.pink.cat/artikel-datalake");
+		                let imgUrl = "https://imgresizer.astro.com.my/Handler/ImageHandler.ashx?token=713e0976-852c-4b36-8542-49d1078fb0d6&portal=1&src=" + data[i].MainImage + "&width=360&height=195";
+		                let divOut = createNode('div');
+		                let divIn = createNode('div');
+		                let img = createNode('img');
+		                let anchor = createNode('a');
+		                let h4 = createNode('h4');
+		                divOut.classList = 'col-sm-6 col-md-4';
+		                anchor.href = newUrl;
+		                anchor.addEventListener('click', function(){
+		                	onclickAnchor(data[i], i+1, productKey);
+		                });
+		                divIn.classList = 'ar_thumb_img';
+		                img.classList = 'img-responsive';
+		                img.src = imgUrl;
+		                h4.classList = 'art_thumb_desc';
+		                h4.innerText = data[i].ArticleTitle;
+		                divIn.append(img);
+		                anchor.append(divIn);
+		                anchor.append(h4);
+		                divOut.append(anchor);
+		                listItem.append(divOut);
+		                myList[productKey].append(listItem);
+		                productList[productKey].push({
+							"name" : data[i].ArticleTitle,
+							"id" : data[i].ArticleCMSID,
+							"price" : "0.00",
+							"brand" : "NA",
+							"category" : data[i].ArticleURL,
+							"variant" : data[i].ModelName,
+							"list" : 'Artikel Berkaitan',
+							"position" : i+1
+						});
+		            }
+					sendAlready[productKey] = false;
+		            articleRelatedPosition[productKey] = myList[productKey].offsetTop;
+		        });
+		    }).catch(function(err) {
+		        console.log('Datalake Error: ', err);
+		    });
+	    }
+	    renderDatalakeList(urlLSI, 'lsi');
+	    renderDatalakeList(urlBase, 'base');
+    </script>
+</body>
+
+</html>

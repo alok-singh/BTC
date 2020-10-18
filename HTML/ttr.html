@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>things to remember</title>
+    <style type="text/css">
+    h1 {
+        background: linear-gradient(#333, #444);
+        padding: 20px 10px;
+        border-radius: 5px;
+        color: #fff;
+        margin: 0px;
+    }
+
+    h2 {
+        border: 1px solid #aaa;
+        padding: 20px 10px;
+        background: #aaa;
+        margin: -5px 0px 20px 0px;
+    }
+    </style>
+</head>
+
+<body>
+    <h1>To fetch all git submodules to latest Tags</h1>
+    <h2><code>gulp sm -update all</code></h2>
+    <h1>get description of all tags</h1>
+    <h2><code>git submodule foreach 'git describe'</code></h2>
+    <h1>run to produce app.build.js</h1>
+    <h2><code>export NODE_ENV=production</code></h2>
+    <h2>then</h2>
+    <h2><code>npm run build</code></h2>
+    <h1>to create tag</h1>
+    <h2>switch to development pull</h2>
+    <h2><code>npm version patch -m "Upgraded to %s"</code></h2>
+    <h2>go to 0.4.x create pull request after changing version of module in datashop json</h2>
+    <h2><code>curl -X POST -F token=63ab890b1be0c3b51aca9d6b712f82 -F ref=0.4.x -F "variables[RELEASE]=patch" http://git.innovaccer.com/api/v3/projects/1250/trigger/builds</code></h2>
+    <h1>mercy base url</h1>
+    <h2><code>https://www.datashop.mercyhealthprovider.com/api/mars</code></h2>
+    <h1>ucsd base url</h1>
+    <h2><code>https://ucsd.innovaccer.com/api/smartpipelines</code></h2>
+    <h1>Prettier JS</h1>
+    <h2><code>prettier --write ./**/*.js</code></h2>
+    <h1>API Configs</h1>
+    <h2><code>http://prod.jupiter.internal.tech/api/v2</code></h2>
+    <h1>which file to edit to change theme in sublime</h1>
+    <h2><code>/Users/i0449-macpro/Library/Application Support/Sublime Text 3/Packages/Colorsublime - Themes/cache/Colorsublime-Themes-master/themes/customTheme.tmTheme</code></h2>
+    
+</body>
+
+</html>

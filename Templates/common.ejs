@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title><%= pageTitle %></title>
+    <% if(cssPath){ %>
+		<link rel="stylesheet" type="text/css" href="<%= cssPath %>" />
+	<% } %>
+    
+</head>
+
+<body>
+    <div id="root">
+        <%- innerHTML %>
+    </div>
+    <% if(jsPath){ %>
+		<script type="text/javascript" src="<%= jsPath %>"></script>
+	<% } %>
+</body>
+
+</html>

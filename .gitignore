@@ -1,0 +1,13 @@
+/node_modules/*
+/package-lock.json
+npm-debug.log
+/Images/*
+**/.DS_Store
+build/*
+Articles/*
+node_modules
+Scripts/*.png
+Scripts/*.json
+Scripts/sitemapVideos/*
+*.zip
+Encription/*

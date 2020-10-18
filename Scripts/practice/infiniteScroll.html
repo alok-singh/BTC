@@ -1,0 +1,102 @@
+<html>
+
+<head>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0" />
+  <title> scroll test </title>
+  <style>
+    body {
+      margin: 0px;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    .main-parent {
+      height: 100vh;
+      overflow-y: scroll;
+      padding: 15px;
+      font-family: sans-serif;
+    }
+
+    .item {
+      height: calc((100vh - 30px - 80px) / 6);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      font-size: 32px;
+      border-bottom: 1px solid #eaeaea;
+      box-shadow: 1px 1px 3px #c4c4c4;
+      margin-bottom: 16px;
+    }
+
+    .item:last-child {
+      margin-bottom: 0px;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="main-parent">
+    <div class="item">1</div>
+    <div class="item">2</div>
+    <div class="item">3</div>
+    <div class="item">4</div>
+    <div class="item">5</div>
+    <div class="item">6</div>
+    <div class="item">7</div>
+    <div class="item">8</div>
+    <div class="item">9</div>
+    <div class="item">10</div>
+    <div class="item">11</div>
+    <div class="item">12</div>
+  </div>
+
+  <script type="text/javascript">
+    
+    const getItem = (index) => {
+      return `<div class="item">${index}</div>`;
+    }
+    
+    const addNextElement = (itemCount, element) => {
+      const items = (new Array(itemCount)).fill(0).map((item, index) => {
+        return getItem(index + 1);
+      });
+      element.innerHTML = items.join('');
+    }
+    
+    const observer = new IntersectionObserver((elements) => {
+      elements.forEach(element => {
+        if(element.isIntersecting) {
+          currentCount = currentCount + 6;
+          addNextElement(currentCount, mainElement);
+          endObserving(currentObservingElement);
+          currentObservingElement = getObservingElement();
+          startObserving(currentObservingElement);
+        }
+      });
+    });
+
+    const getObservingElement = () => {
+      const allElements = document.querySelectorAll('.main-parent .item');
+      return allElements[allElements.length - 5];
+    }
+    
+    const startObserving = (element) => {
+      observer.observe(element);
+    };
+
+    const endObserving = (element) => {
+      observer.unobserve(element);
+    }
+
+    let currentCount = 12;
+    let currentObservingElement = getObservingElement();
+    
+    const mainElement = document.querySelector('.main-parent');
+    startObserving(currentObservingElement);
+
+  </script>
+</body>
+
+</html>

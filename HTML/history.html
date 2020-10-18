@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<link rel="stylesheet" type="text/css" href="../CSS/history.css">
+	</head>
+	<body>
+		<input type="number" id="size" name="size" placeholder="size" />
+		<input type="datetime-local" id="start" name="start" placeholder="start" />
+		<input type="datetime-local" id="end" name="end" placeholder="end" />
+		<select>
+			<option value="sell"> sell </option>
+			<option value="buy"> buy </option>
+			<option value="pricechange"> pricechange </option>
+			<option value="volume"> volume </option>
+			<option value="24hoursHigh"> 24 hours High </option>
+			<option value="24hoursLow"> 24 hours Low </option>
+			<option value="market"> market </option>
+			<option value="pair"> pair </option>
+			<option value="virtualCurrency"> virtual Currency </option>
+			<option value="currency"> currency </option>
+		</select>
+		<button onclick="sendRequest()">submit</button>
+		<div class="canvas-wrapper">
+			<canvas id="buy" width="8000" height="600">
+				Your browser does not support the HTML5 canvas tag.
+			</canvas>
+		</div>
+		<script src="../JS/history.js"></script> 
+	</body>
+</html>

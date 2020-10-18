@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title></title>
+    <style type="text/css">
+    * {
+        font-family: sans-serif;
+        box-sizing: border-box;
+    }
+
+    .main {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: space-between;
+    }
+
+    .year-wrapper {
+        width: 30vw;
+        background: #fff;
+        margin: 10px;
+        box-sizing: border-box;
+        border: 1px solid #eaeaea;
+        border-radius: 5px;
+        overflow: hidden;
+    }
+
+    .year {
+        background: #333;
+        color: #fff;
+        padding: 8px;
+        text-align: center;
+    }
+
+    .total {
+        text-align: right;
+        padding: 10px;
+    }
+
+    .employee {
+        display: block;
+        padding: 11px;
+    }
+
+    .employee:nth-child(odd) {
+        background: #eaeaea;
+    }
+    </style>
+</head>
+
+<body>
+    <div id="root">
+        <%- innerHTML %>
+    </div>
+</body>
+
+</html>
